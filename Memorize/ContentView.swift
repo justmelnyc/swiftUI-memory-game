@@ -19,7 +19,9 @@ struct ContentView: View {
             }
         }
         .padding()
+        .aspectRatio(0.67, contentMode: .fit)
         .foregroundColor(Color.orange)
+        .font(viewModel.cards.count<10 ? .largeTitle : .title)
     }
 }
 
