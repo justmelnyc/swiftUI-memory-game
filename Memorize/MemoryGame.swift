@@ -6,10 +6,11 @@
 //  Copyright © 2020 Cosmos Liu. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     var cards: Array<Card>
+    var cardColor: Color
     
     var indexOfTheOneAndTheOnlyFaceUpCard: Int? {
         get {
@@ -37,7 +38,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
-    init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent){
+    init(numberOfPairsOfCards: Int, color: Color, cardContentFactory: (Int) -> CardContent){
         cards = Array<Card>()
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = cardContentFactory(pairIndex)
@@ -45,6 +46,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: pairIndex*2+1))
         }
         cards.shuffle()
+        cardColor = color
     }
     
     struct Card: Identifiable {

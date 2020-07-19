@@ -12,17 +12,22 @@ class EmojiMemoryGame: ObservableObject {
     @Published private var gameModel: MemoryGame<String> = createMemoryGame()
     
     static func createMemoryGame() -> MemoryGame<String> {
-        let emojis: Array<String> = ["🥰", "😃", "😥", "🤪", "🤩"]
+        let selectedTheme: EmojiTheme = EmojiThemeSet().emojiCollection.randomElement()!
         return MemoryGame<String>(numberOfPairsOfCards:
-            Int.random(in: 2...5))
+            selectedTheme.numberOfCards, color: selectedTheme.cardColor)
         {pairIndex in
-            return emojis[pairIndex]
+            return selectedTheme.emojiSet[pairIndex]
         }
     }
     
     // MARK: - Access to the Model
     var cards: Array<MemoryGame<String>.Card> {
         gameModel.cards
+    }
+    
+    // MARK: - Access to the Model Color
+    var cardColor: Color {
+        gameModel.cardColor
     }
     
     // MARK: - Intents(s)
