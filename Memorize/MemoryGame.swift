@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-struct MemoryGame<CardContent> where CardContent: Equatable {
+struct MemoryGame<CardContent, GameTheme> where CardContent: Equatable {
     var cards: Array<Card>
-    var cardColor: Color
+    var gameTheme: GameTheme
     
     var indexOfTheOneAndTheOnlyFaceUpCard: Int? {
         get {
@@ -38,7 +38,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
-    init(numberOfPairsOfCards: Int, color: Color, cardContentFactory: (Int) -> CardContent){
+    init(numberOfPairsOfCards: Int, theme: GameTheme, cardContentFactory: (Int) -> CardContent){
         cards = Array<Card>()
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = cardContentFactory(pairIndex)
@@ -46,7 +46,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: pairIndex*2+1))
         }
         cards.shuffle()
-        cardColor = color
+        gameTheme = theme
     }
     
     struct Card: Identifiable {

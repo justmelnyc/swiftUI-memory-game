@@ -11,20 +11,29 @@ import SwiftUI
 struct EmojiMemoryGameView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     var body: some View {
-        Grid(viewModel.cards) { card in
-                CardView(card: card).onTapGesture{
-                    self.viewModel.choose(card: card)
-                }
-        .padding(5)
+        VStack {
+            HStack(spacing: 20) {
+                Text("Score: 8").foregroundColor(viewModel.emojiTheme.cardColor)
+                Text(viewModel.emojiTheme.name).font(Font.title)
+                Button("New Game", action: {
+                    self.viewModel.restartMemoryGame()
+                })
+            }
+            .frame(maxWidth: .infinity)
+            Grid(viewModel.cards) { card in
+                    CardView(card: card).onTapGesture{
+                        self.viewModel.choose(card: card)
+                    }
+            .padding(5)
+            }
+            .padding(.bottom).padding(.leading).padding(.trailing)
+            .foregroundColor(viewModel.emojiTheme.cardColor)
         }
-        .padding()
-        .foregroundColor(viewModel.cardColor)
-        
     }
 }
 
 struct CardView: View{
-    var card: MemoryGame<String>.Card
+    var card: MemoryGame<String, EmojiTheme>.Card
     
     var body: some View {
         GeometryReader(content: { geometry in

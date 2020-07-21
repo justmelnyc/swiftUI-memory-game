@@ -12,11 +12,12 @@ struct EmojiThemeSet {
     var emojiCollection: Array<EmojiTheme>
     
     init() {
-        let halloweenTheme = EmojiTheme(name: "Faces", emojiSet: ["👻", "🎉", "🧸", "🎃"], cardColor: Color.orange)
-        let facesTheme: EmojiTheme = EmojiTheme(name: "Faces", emojiSet: ["🥰", "😃", "😥", "🤪", "🤩"], cardColor: Color.red)
-        let animalsTheme: EmojiTheme = EmojiTheme(name: "Animals", emojiSet: ["🐶", "🦊", "🐰", "🐵", "🦋"], cardColor: Color.green)
+        let halloweenTheme = EmojiTheme(name: "Halloween", emojiSet: ["👻", "🎉", "🧸", "🎃"], cardColor: Color.orange)
+        let facesTheme: EmojiTheme = EmojiTheme(name: "Faces", emojiSet: ["🥰", "😃", "😥", "🤪", "🤩"], cardColor: Color.red, isRandomNumberOfCards: true)
+        let animalsTheme: EmojiTheme = EmojiTheme(name: "Animals", emojiSet: ["🐶", "🦊", "🐰", "🐵", "🦋"], cardColor: Color.green, isRandomNumberOfCards: true)
         let sportsTheme: EmojiTheme = EmojiTheme(name: "Sports", emojiSet: ["⚽️", "🏀", "🎱", "🧘‍♀️"], cardColor: Color.gray)
-        emojiCollection = [halloweenTheme, facesTheme, animalsTheme, sportsTheme]
+        let colorfulHeartTheme: EmojiTheme = EmojiTheme(name: "Colorful Heart", emojiSet: ["❤️", "🧡", "💛", "💚", "💙", "💜"], cardColor: Color.black, isRandomNumberOfCards: true)
+        emojiCollection = [halloweenTheme, facesTheme, animalsTheme, sportsTheme, colorfulHeartTheme]
     }
     
     mutating func addTheme(theme: EmojiTheme) {
@@ -30,10 +31,10 @@ struct EmojiTheme {
     var numberOfCards: Int
     var cardColor: Color
 
-    init(name: String, emojiSet: Array<String>, cardColor: Color) {
+    init(name: String, emojiSet: Array<String>, cardColor: Color, isRandomNumberOfCards: Bool = false) {
         self.name = name
         self.emojiSet = emojiSet
-        self.numberOfCards = emojiSet.count
+        self.numberOfCards = isRandomNumberOfCards ? Int.random(in: 2..<emojiSet.count) : emojiSet.count
         self.cardColor = cardColor
     }
 }
