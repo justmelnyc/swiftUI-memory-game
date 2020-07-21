@@ -11,7 +11,7 @@ import SwiftUI
 class EmojiMemoryGame: ObservableObject {
     @Published private var gameModel: MemoryGame<String, EmojiTheme> = createMemoryGame()
     
-    static func createMemoryGame() -> MemoryGame<String, EmojiTheme> {
+    private static func createMemoryGame() -> MemoryGame<String, EmojiTheme> {
         let selectedTheme: EmojiTheme = EmojiThemeSet().emojiCollection.randomElement()!
         return MemoryGame<String, EmojiTheme>(numberOfPairsOfCards:
             selectedTheme.numberOfCards, theme: selectedTheme)
