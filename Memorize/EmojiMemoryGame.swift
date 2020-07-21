@@ -29,6 +29,10 @@ class EmojiMemoryGame: ObservableObject {
         gameModel.cards
     }
     
+    var score: Int {
+        gameModel.score
+    }
+    
     // MARK: - Access to the Model Color
     var emojiTheme: EmojiTheme {
         gameModel.gameTheme

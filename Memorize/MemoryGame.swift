@@ -11,6 +11,8 @@ import SwiftUI
 struct MemoryGame<CardContent, GameTheme> where CardContent: Equatable {
     var cards: Array<Card>
     var gameTheme: GameTheme
+    var score: Int
+    var seenCardContent: Array<CardContent>
     
     var indexOfTheOneAndTheOnlyFaceUpCard: Int? {
         get {
@@ -25,16 +27,32 @@ struct MemoryGame<CardContent, GameTheme> where CardContent: Equatable {
     
     mutating func choose(card: Card) {
         print("Card chosen: \(card)")
+        print(seenCardContent)
         if let chosenIndex: Int = cards.firstIndex(matching: card), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched{
             if let potentialMatchIndex = indexOfTheOneAndTheOnlyFaceUpCard {
-                if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+                let currContent = cards[chosenIndex].content
+                let prevContent = cards[potentialMatchIndex].content
+                if currContent == prevContent {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    score += 2
+                }
+                else { // mismatch
+                    checkScorePenalty(cardContent: currContent)
+                    checkScorePenalty(cardContent: prevContent)
                 }
                 self.cards[chosenIndex].isFaceUp = true
             } else {
                 indexOfTheOneAndTheOnlyFaceUpCard = chosenIndex
             }
+        }
+    }
+    
+    mutating func checkScorePenalty(cardContent: CardContent) {
+        if seenCardContent.contains(cardContent) {
+            score -= 1
+        } else {
+            seenCardContent.append(cardContent)
         }
     }
     
@@ -47,6 +65,8 @@ struct MemoryGame<CardContent, GameTheme> where CardContent: Equatable {
         }
         cards.shuffle()
         gameTheme = theme
+        score = 0
+        seenCardContent = Array<CardContent>()
     }
     
     struct Card: Identifiable {
