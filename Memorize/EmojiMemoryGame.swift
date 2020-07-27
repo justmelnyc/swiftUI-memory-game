@@ -20,10 +20,6 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    func restartMemoryGame() {
-        gameModel = EmojiMemoryGame.createMemoryGame()
-    }
-    
     // MARK: - Access to the Model
     var cards: Array<MemoryGame<String, EmojiTheme>.Card> {
         gameModel.cards
@@ -33,7 +29,6 @@ class EmojiMemoryGame: ObservableObject {
         gameModel.score
     }
     
-    // MARK: - Access to the Model Color
     var emojiTheme: EmojiTheme {
         gameModel.gameTheme
     }
@@ -41,5 +36,9 @@ class EmojiMemoryGame: ObservableObject {
     // MARK: - Intents(s)
     func choose(card: MemoryGame<String, EmojiTheme>.Card) {
         gameModel.choose(card: card)
+    }
+    
+    func restartMemoryGame() {
+        gameModel = EmojiMemoryGame.createMemoryGame()
     }
 }
